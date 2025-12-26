@@ -17,6 +17,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* StaticMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
+	TArray<UStaticMesh*> Shapes;
+
 	FTimerHandle MoveTimer; 
 
 protected:
@@ -40,6 +43,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Location")
 	FVector MoveRange_Max = FVector(500.f, 500.f, 500.f);
 	
+	// 이전 위치 
 	FVector LastLocation; 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "MovementInfo")
@@ -89,6 +93,8 @@ protected:
 
 	/*이벤트 정보 (현재 스케일, 이벤트 발동 횟수) 출력 */
 	void PrintScaleInfo();
+
+	void SetRandomMesh(); 
 
 public:	
 	// Called every frame

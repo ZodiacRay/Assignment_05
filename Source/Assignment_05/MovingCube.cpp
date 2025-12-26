@@ -29,7 +29,7 @@ void AMovingCube::BeginPlay()
 		DynamicMaterialInst = StaticMesh->CreateDynamicMaterialInstance(0, CubeMaterial, TEXT("None"));
 	}
 	
-	// 시작점은 (0, 50, 0)이고 한번 이동시 현재 좌표 및 이동 횟수를 출력 합니다.
+	// 시작점은 (0, 50, 0)
 	SetActorLocation(FVector(0, 50, 0)); 
 
 	// 타이머 설정 
@@ -78,7 +78,7 @@ void AMovingCube::Move()
 
 	SetActorLocation(NewLocation);
 
-	// 현재 좌표, 이동횟수 출력 
+	// 현재 좌표, 이동 거리, 이동횟수 출력 
 	PrintMoveInfo(); 
 
 	// 이동 횟수 증가 
@@ -106,8 +106,6 @@ void AMovingCube::PrintMoveInfo()
 	// 움직인 횟수 
 	const FString MovementStr = TEXT("Movement: ") + FString::FromInt(MovementCount);
 
-	
-
 	if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Blue, LocationStr);
@@ -129,6 +127,8 @@ void AMovingCube::IncreaseMovementCount()
 			SetRandomScale();
 
 			SetMaterialRandomColor(); 
+
+			SetRandomMesh(); 
 		}
 		
 	}
@@ -177,6 +177,17 @@ void AMovingCube::PrintScaleInfo()
 		GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, MovementStr);
 	}
 	
+}
+
+void AMovingCube::SetRandomMesh()
+{
+	int32 size = Shapes.Num(); 
+	if (size <= 1) return;
+
+	int32 randomIndex = FMath::RandRange(0, size-1);
+
+	StaticMesh->SetStaticMesh(Shapes[randomIndex]); 
+
 }
 
 void AMovingCube::Turn()
